@@ -12,7 +12,7 @@ typedef struct Font {
   SDL_Surface *font;
   int w;
   int h;
-  };
+} Font;
 
 
 void initFont(Font *font, const char *filename);

@@ -7,7 +7,7 @@
 #include "var.hh"
 
 
-typedef enum STATUS {NORMAL, POISONED, CRITICAL, DEAD};
+typedef enum STATUS {NORMAL, POISONED, CRITICAL, DEAD} STATUS;
 
 
 typedef struct Status
@@ -32,7 +32,7 @@ typedef struct Status
   float strength_mod;
   float hp_mod;
   float mp_mod;
-};
+} Status;
 
 
 extern SDL_Surface *sideBar;

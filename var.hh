@@ -24,7 +24,7 @@ modified:
 extern const char* VAR_GetError();
 
 
-typedef enum VAR_datatype {VAR_STRING, VAR_BOOL, VAR_INT, VAR_FLOAT};
+typedef enum VAR_datatype {VAR_STRING, VAR_BOOL, VAR_INT, VAR_FLOAT} VAR_datatype;
 
 
 typedef union VAR_paramData
@@ -33,7 +33,7 @@ typedef union VAR_paramData
   bool bool_data;
   int int_data;
   float float_data;
-};
+} VAR_paramData;
 
 
 class VAR_param

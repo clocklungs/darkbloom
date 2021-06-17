@@ -3,7 +3,7 @@
 
 #define STACKSIZE 100
 
-typedef enum Direction {DOWN=0, UP=1, LEFT=2, RIGHT=3};
+typedef enum Direction {DOWN=0, UP=1, LEFT=2, RIGHT=3} Direction;
 
 class Stack
 {

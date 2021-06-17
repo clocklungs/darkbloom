@@ -27,7 +27,7 @@ int dboxChoice(const char *title, Choice choices[DBOX_CHOICES])
 
   /*truncate menu caption/title as necessary*/
   strncpy(buffer, title, DBOX_TEXTMAX);
-  buffer[DBOX_TEXTMAX] = '\0';
+  buffer[DBOX_TEXTMAX - 1] = '\0';
 
   /*draw menu caption/title*/
   writeFont(&dboxFont, screen, x, y, buffer);
@@ -38,7 +38,7 @@ int dboxChoice(const char *title, Choice choices[DBOX_CHOICES])
     if(choices[i].active == false) break;
     /*truncate choice text as needed*/
     strncpy(buffer, choices[i].text.c_str(), DBOX_TEXTMAX);
-    buffer[DBOX_TEXTMAX] = '\0';
+    buffer[DBOX_TEXTMAX - 1] = '\0';
     choices[i].text = buffer;
     /*highlight first choice*/
     if(i == 0)

@@ -18,7 +18,7 @@ int mainMenu()
   Font *font, *hlfont;
   int i, top, left, items, width, prev, selected;
   static int curr=0;
-  char *text[] = {
+  const char *text[] = {
                 "New game",
                 "Continue",
                 "Options",
@@ -181,7 +181,7 @@ int optionMenu(int curr) {
   Font *font, *hlfont;
   int i, top, left, items, width, prev, selected;
   SDLKey key;
-  char *text[] = {
+  const char *text[] = {
                 "Fullscreen: ",
                 "Sounds: ",
                 "Music: ",

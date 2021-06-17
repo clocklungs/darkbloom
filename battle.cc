@@ -195,7 +195,7 @@ void battlefield_init(int nmy,int boss)
                         IMG_Load(enemies[random_enemy].graphic_attack.c_str());
     
     battle_enemies[i].attacking=0;
-    if(battle_enemies[i].image==NULL)
+    if(battle_enemies[i].image[0]==NULL || battle_enemies[i].image[1] == NULL)
       {
       fprintf(stderr,"error loading image: %s",IMG_GetError());
       }

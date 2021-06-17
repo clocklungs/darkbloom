@@ -8,8 +8,8 @@
 #include "path.hh"
 
 
-typedef enum Collision {NONE=0, FULL=1, MOVE=2};
-typedef enum Speed {SLOWED=0, WALK=1, RUN=2, HASTED=3};
+typedef enum Collision {NONE=0, FULL=1, MOVE=2} Collision;
+typedef enum Speed {SLOWED=0, WALK=1, RUN=2, HASTED=3} Speed;
 
 const int ObjectSteps[4] = {16, 8, 4, 2};
 const int ObjectStepSize[4] = {2, 4, 8, 16};

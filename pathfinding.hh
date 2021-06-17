@@ -39,7 +39,7 @@ typedef struct blocks
   int g;
   int h;
   int f;
-  };
+  } blocks;
   
 typedef struct finder
   {
@@ -53,6 +53,6 @@ typedef struct finder
   int y;
   int f;
   int h;
-  };
+  } finder;
 
 #endif

@@ -11,13 +11,12 @@
 extern VAR_paramList dialog_vars;
 
 
-typedef struct Choice
-{
+typedef struct Choice {
   std::string text;
   int value;
   bool active;
   Button button;
-};
+} Choice;
 
 
 int playDialog(const char *filename);
