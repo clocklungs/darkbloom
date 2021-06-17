@@ -1,0 +1,4 @@
+
+w visible = 1
+w c_script = scripts/make_invisible.script
+E1

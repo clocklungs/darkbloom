@@ -1,0 +1,6 @@
+#set player position
+P 3 4
+#load world
+Lmaps/next.map
+#exit script
+E1

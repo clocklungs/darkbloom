@@ -1,0 +1,366 @@
+NAME
+      darkbloom
+
+SYNOPSIS
+      darkbloom [--version]
+
+      running 'darkbloom' will start the game
+      the '--version' option will cause it to print out version
+      information (game version, SDL/SDL_mixer version compiled/linked
+      with) and exit
+
+      menu navigation is accomplished with either the mouse or keyboard.
+      the up/down arrow keys and/or mouse cursor can be used to select
+      menu items. space/enter and/or mouse-clicks are used to activate
+      a selected menu item. menu options are changed either with the
+      left/right arrow keys or left/right mouse-clicks. escape or right
+      click (not on a menu item/option) is used to return to the
+      previous menu (exiting the game from the topmost menu).
+
+      the world is navigable using a combination of the keyboard and
+      mouse. the arrow keys can be used to attempt to move one space
+      in the appropriate direction. alternately the mouse can be used
+      to specify a space to walk/run to. the player runs by default,
+      however, left clicking with the mouse will cause the player to
+      move at walking speed; right clicking will switch to running
+      speed. objects are activated by standing next to them, facing
+      the appropriate direction, and pressing the enter key. pressing
+      the space key will start a boss battle.
+
+      dialogs can be advanced with either mouse clicks or the space,
+      enter, or escape keys. dialog choices are selected with either
+      the mouse cursor or the up/down arrow keys and are activated by
+      either clicking them or pressing either the enter or space key.
+
+      the state of the art battles take place in semi-real-time. you
+      select which character to attack with by using the left/right
+      arrow keys. the up/down arrow keys are used to select whether to
+      execute a melee or magical attack. selecting magic will open
+      the spell selection menu; use the up/down arrow keys to select
+      which spell to cast. space will return to the previous menu and
+      enter will choose the selected attack/spell. once an attack is
+      chosen, you use the left/right arrow keys to select which enemy
+      to attack. pressing space will return to the menu and pressing
+      enter will perform the attack.
+
+OPTIONS
+      fullscreen - specifies whether or not to run fullscreen
+      sound - whether or not to play sound effects
+      music - whether or not to play the background music
+
+      settings are stored to and loaded from the file 'config' in
+      the program directory.
+
+FILE FORMATS BELOW
+
+ENEMIES
+      name: ENEMY_NAME
+      hp: HITPOINTS
+      strength: STRENGTH
+      agility: AGILITY
+      xp: EXPERIENCE_POINTS_IT_IS_WORTH
+      graphic_idle: IDLE_GRAPHIC_FILENAME
+      graphic_attack: ATTACK_GRAPHIC_FILENAME
+      offset_x: X_DRAWING_OFFSET
+      offset_y: Y_DRAWING_OFFSET
+
+      there is no difference between an enemy datafile and a boss
+      datafile other than the extension usually given to them.
+
+      example:
+        name: Rat
+        hp: 20
+        strength: 12
+        agility: 22
+        xp: 20
+        graphic_idle: enemies/images/rat_idle.png
+        graphic_attack: enemies/images/rat_attack.png
+        offset_x: 0
+        offset_y: 50
+
+ENEMYLISTS
+      enemy definition filename
+      
+      example:
+        enemies/rat.enemy
+        enemies/your_mom.enemy
+
+OBJECTS
+      name: OBJECT_NAME
+        string (first 10 chars are the only ones displayed)
+        should not contain spaces, i think.
+      visible: IS_IT_VISIBLE
+        1 or 0
+      persistent: SHOULD_WE_RELOAD_IT
+        1 or 0
+        if the object is persistent, it will not be reloaded when we
+        return to the objects area. this way it will retain any
+        changes that have been made to it. only 1 object of any
+        given name can be persistent in an area (more or less)
+      active: IS_IT_CURRENTLY_ACTIVE
+        1 or 0
+        whether the object should be placed in the world effectively
+        on load, or just loaded
+      zindex: VISIBLE_LAYER_ORDERING
+        a float
+        this is used to determine which order objects are drawn. an
+        object of zindex 1 will always be below (visibly) an object of
+        zindez 2.
+      offset_x: X_DRAWING_OFFSET
+        signed integer
+        how far (on the x axis) to offset from the expected position
+        when drawing the object
+      offset_y: Y_DRAWING_OFFSET
+        signed integer
+        how far (on the y axis) to offset from the expected position
+        when drawing the object
+      image: GRAPHIC_FILENAME
+        NONE or filename (80 chars max)
+      frame_size.x: FRAME_X_FOR_GRAPHIC
+      frame_size.y: FRAME_Y_FOR_GRAPHIC
+      frame_size.w: FRAME_W_FOR_GRAPHIC
+      frame_size.h: FRAME_H_FOR_GRAPHIC
+        integers
+        objects have 'facings'. that is, they can point in different
+        directions and the frame size is how you specify how big
+        the actual object's image is (since the graphic may contain
+        several facings)
+      a_script: ACTIVATION_SCRIPT_FILENAME
+        NONE or filename (80 chars max)
+        the script to run if this object is activated
+      c_script: COLLISION_SCRIPT_FILENAME
+        NONE or filename (80 chars max)
+        the script to run if this object is collided with
+      collidable: COLLIDABILITY TYPE
+        NONE or FULL or MOVE
+        NONE = only triggers the collision script
+        FULL = immovable
+        MOVE = pushable object. if there is not another object in the
+        way, the object may be pushed into a new space.
+
+      example:
+        name: Tree
+        visible: 1
+        persistent: 0
+        active: 1
+        zindex: 2
+        offset_x: -32
+        offset_y: -64
+        image: images/tree.png
+        frame_size.x: 0
+        frame_size.y: 0
+        frame_size.w: 96
+        frame_size.h: 96
+        a_script: scripts/tree.script
+        c_script: NONE
+        collidable: FULL
+
+ANIMATED OBJECTS
+      same as OBJECTS with the 'image: ' line replaced by:
+      image_down: DOWN_FACING_ANIMATION
+        NONE or filename
+      move_frame_start: INTEGER
+        integer
+        which frame the movement animation starts on (if any)
+      and three more for up, left, and right facings.
+
+      example:
+        name: Yddor
+        visible: 1
+        persistent: 1
+        active: 1
+        zindex: 2
+        offset_x: 0
+        offset_y: -32
+        image_down: images/rod_anim_down.png
+        move_frame_start: 2
+        image_up: images/rod_anim_up.png
+        move_frame_start: 2
+        image_left: images/rod_anim_left.png
+        move_frame_start: 2
+        image_right: images/rod_anim_right.png
+        move_frame_start: 2
+        frame_size.x: 0
+        frame_size.y: 0
+        frame_size.w: 32
+        frame_size.h: 64
+        a_script: NONE
+        c_script: NONE
+        collidable: FULL
+
+DIALOGS
+      $(VARNAME) string your mom
+        creates or sets a variable named VARNAME of type 'string' with
+        the value 'your mom'. valid types are int/float/bool/string.
+
+      [1]
+        denotes a section (in this case, section 1). used by jumps.
+        the closing bracket is not required.
+
+      @1
+        jumps to the section number specified. target section number
+        can be a variable (@ $(EXIT_SECTION) for instance)
+
+      !$(VARNAME)
+        evaluates the variable (in this case VARNAME) as true or false
+        and skips the next command if the eval was false
+
+      dialog system special variables
+      the effect will take place on the next dialogbox displayed
+      
+      DBOXTOP
+        evaluated as: bool
+        effect:
+          if true dialogbox is drawn at the top of the screen
+          else it is drawn at the bottom
+      
+      DBOXTITLE
+        evaluated as: string
+        effect:
+          used to set the title/caption of the dialogbox
+      
+      DBOXIMG
+        evaluated as: string
+        effect:
+          determines the image file to load and display in the
+          dialogbox
+      
+      DBOXSND
+        evaluated as: string
+        effect:
+          determines the sound file to load and play
+          the value is auto automatically cleared and the sound stopped
+          when the dialogbox is closed
+      
+      DBOXSNDLOOPS
+        evaluated as: int
+        effect:
+          determines how many additional times to play the dialogbox
+          sound. a value of 1 plays the sound effect 2 times total. -1
+          will attempt to loop forever. automatically reset to 0 when
+          closed.
+
+
+SCRIPTING
+      Lfilename
+        load filename as the current level
+      P x y
+        specifies new x, y coordinates for player
+      Dfilename
+        specifies a dialog to execute
+        sets DIALOG_RETVAL as the exitcode of the dialog
+      d msecs
+        delay in milliseconds
+      Mfilename
+        load filename as the new music track
+      Sfilename
+        load filename and play as sound effect
+        the sound effect chunk is freed when the parent script
+        returns, so you may need a delay if you want to make sure
+        it plays long enough
+      W property = value
+        sets the 'who' object property 'property' to the value of 'value'
+      w property = value
+        sets the 'what' object property 'property' to the value of 'value'
+      B num
+        starts a boss battle w/ 'num' random henchmen
+      b num
+        starts a battle w/ 'num' random henchmen
+      $, [, @, ! all work the same as in the dialog system
+
+MAPS
+      AREANAME
+      ENEMYLIST
+      TILELIST
+      AREA_WIDTH AREA_HEIGHT
+      TILE_ARRAY
+      NUMBER_OF_OBJECTS
+      OBJECT_X OBJECT_Y
+      OBJECT_FILENAME
+
+      maps have a minimum width/height of 15 and a maximum of 100.
+      objects outside the area bounds will not be drawn.
+
+      example:
+        Darkshire
+        
+        enemies/start.enemylist
+        
+        tiles/common.tilelist
+        
+        15 20
+        
+        010 010 010 010 010 010 010 010 010 010 010 010 010 010 010
+        010 010 010 010 010 010 010 010 010 010 010 010 010 010 010
+        010 010 010 010 010 010 010 010 010 010 010 010 010 010 010
+        010 010 010 010 010 010 010 010 010 010 010 010 010 010 010
+        010 010 010 010 010 010 010 010 010 010 010 010 010 010 010
+        010 010 010 010 010 010 010 010 010 010 010 010 010 010 010
+        010 010 010 010 010 041 041 041 041 041 041 010 010 010 010
+        010 010 010 010 010 041 010 010 010 010 041 010 010 010 010
+        010 010 010 010 010 041 010 010 010 010 041 010 010 010 010
+        010 010 010 010 010 041 010 010 010 010 041 010 010 010 010
+        010 010 010 010 010 041 010 010 010 010 041 010 010 010 010
+        010 010 010 010 010 041 041 010 041 041 041 010 010 010 010
+        010 010 010 010 010 010 010 040 010 010 010 010 010 010 010
+        010 010 010 010 010 010 010 040 010 010 010 010 010 010 010
+        010 010 010 010 010 010 010 040 010 010 010 010 010 010 010
+        010 010 010 010 010 010 010 040 010 010 010 010 010 010 010
+        010 010 010 010 010 010 010  40 010 010 010 010 010 010 010
+        010 010 010 010 010 010 010 040 010 010 010 010 010 010 010
+        010 010 010 010 010 010 010 040 010 010 010 010 010 010 010
+        010 010 010 010 010 010 010 040 010 010 010 010 010 010 010
+
+        10
+
+        17 17
+        objects/tree.object
+
+        8 3
+        objects/battle.object
+
+        19 19
+        objects/battle.object
+
+        4 13
+        objects/tree.object
+
+        10 14
+        objects/deadtree.object
+
+        6 3
+        objects/deadtree.object
+
+        7 11
+        objects/house_bottom.object
+
+        7 11
+        objects/house_top.object
+
+        9 10
+        objects/catsailor.anim
+
+        15 5
+        objects/swirl.object
+
+
+TILELISTS
+      tilenumber and filename pairs. tilenumber may be preceeded by
+      spaces or zeroes.
+
+      example:
+        010 tiles/grass.png
+        040 tiles/stone.png
+        041 tiles/stone.png
+         11 tiles/sand.png
+        020 tiles/dirt.png
+          2 tiles/ltdirt_brgrass.png
+
+BUGS
+      mostly harmless
+
+CONTRIBUTORS
+      Roderick L. E. Newill
+      Paul W. Carley
+
+EOF

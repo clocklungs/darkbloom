@@ -1,0 +1,9 @@
+name: Static
+hp: 20
+strength: 12
+agility:  36
+xp: 20
+graphic_idle: images/nmy2.png
+graphic_attack: images/nmy2attack.png
+offset_x: 0
+offset_y: 0

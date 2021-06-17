@@ -1,0 +1,9 @@
+name: Ringo
+hp: 20
+strength: 12
+agility:  23
+xp: 20
+graphic_idle: images/nmy0.png
+graphic_attack: images/nmy0attack.png
+offset_x: 0
+offset_y: 0

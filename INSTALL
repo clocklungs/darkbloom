@@ -1,0 +1,4 @@
+game depends on SDL, SDL_image, and SDL_mixer
+
+run 'make'
+then run './darkbloom'

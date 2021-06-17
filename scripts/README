@@ -1,0 +1,26 @@
+Lfilename
+  //load filename as the current level
+P x y
+  //specifies new x, y coordinates for player
+Dfilename
+  //specifies a dialog to execute
+  //sets DIALOG_RETVAL as the exitcode of the dialog
+d msecs
+  //delay in milliseconds
+Mfilename
+  //load filename as the new music track
+Sfilename
+  //load filename and play as sound effect
+  //the sound effect chunk is freed when the parent script
+  //returns, so you may need a delay if you want to make sure
+  //it plays long enough
+W property = value
+  //sets the 'who' object property 'property' to the value of 'value'
+w property = value
+  //sets the 'what' object property 'property' to the value of 'value'
+B num
+  //starts a boss battle w/ 'num' random henchmen
+b num
+  //starts a battle w/ 'num' random henchmen
+
+$, [, @, ! all work the same as in the dialog system

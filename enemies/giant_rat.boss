@@ -1,0 +1,9 @@
+name: GiantRat
+hp: 20
+strength: 12
+agility: 22
+xp: 20
+graphic_idle: enemies/images/giant_rat_idle.png
+graphic_attack: enemies/images/giant_rat_attack.png
+offset_x: -23
+offset_y: -25

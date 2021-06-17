@@ -1,0 +1,4 @@
+
+w visible = 0
+w c_script = scripts/make_visible.script
+E1

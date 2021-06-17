@@ -1,0 +1,9 @@
+name: dude
+hp: 22
+strength: 12
+agility:  8
+xp: 20
+graphic_idle: images/nmy4.png
+graphic_attack: images/nmy4attack.png
+offset_x: 0
+offset_y: 0

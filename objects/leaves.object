@@ -1,0 +1,15 @@
+name: Leaves
+visible: 1
+persistent: 0
+active: 1
+zindex: 0
+offset_x: 0
+offset_y: 0
+image: images/leaves.png
+frame_size.x: 0
+frame_size.y: 0
+frame_size.w: 32
+frame_size.h: 32
+a_script: NONE
+c_script: scripts/start.script
+collidable: NONE

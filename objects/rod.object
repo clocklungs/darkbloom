@@ -1,0 +1,15 @@
+name: CatSailor
+visible: 1
+persistent: 1
+active: 1
+zindex: 2
+offset_x: 0
+offset_y: -32
+image: images/player_tmp.png
+frame_size.x: 0
+frame_size.y: 0
+frame_size.w: 32
+frame_size.h: 64
+a_script: scripts/dialog.script
+c_script: NONE
+collidable: FULL

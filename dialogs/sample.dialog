@@ -1,0 +1,122 @@
+#sample dialog
+#Thu Jul 21 17:27:46 EDT 2005
+#blank lines and comments (lines beginning w/ '#' are ignored)
+
+#special variables
+#dialogbox on top or bottom
+$(DBOXTOP) bool true
+#dialogbox title
+$(version) float 6.06
+$(DBOXTITLE) string v.$(version)
+#dialogbox image (usually a person)
+$(DBOXIMG) string images/cat_sailor.png
+$(STARTSECTION) int 0
+
+#we've already played this dialog, so skip the starting variable section
+!$(STARTED)
+@ $(STARTSECTION)
+
+#mark this as started
+$(STARTED) bool true
+
+#set some variables, case sensitive, no other rules really
+#you can set them anywhere in the dialog
+#but they don't have a value until then (they eval as false though)
+#valid types are 'bool', 'int', 'float', and 'string'
+$(FAILED) bool false
+$(insult) string kind sir
+#we can have long space filled variable names
+$(bad choice text variable) string don't choose this one
+
+
+#let's flush the dialog buffer, for good measure
+^
+
+#jump to section 0
+@ $(STARTSECTION)
+
+
+#we don't have to have our sections in proper order
+[2]
+$(DBOXSND) string sounds/applause.ogg
+$(DBOXTITLE) string WINNER! ^_^
+"Congrats, $(insult)!
+!$(STUPID)
+#evals connect to the next actual line of code, skipping comments and such
+@5
+"Thanks for playing.
+#E stands for exit, and the number following is the exitcode to give
+E8008135
+
+
+[5]
+"That's more like it.
+E 1
+
+
+[0]
+"Welcome to version $(version) of the dialog system.
+"
+"the dialog system comes with mouse support as well as customizable
+$(DBOXTITLE) string CUSTOM'ED!!
+"captions and NPC images and can switch locations at will, just watch...
+^
+
+$(DBOXTOP) bool false
+$(DBOXIMG) string images/dialogimg.png
+$(DBOXTITLE) string DOWN HERE NOW
+$(DBOXSND) string sounds/applause.ogg
+$(DBOXSNDLOOPS) int 2
+"THREE CHEERS FOR SOUNDS SUPPORT!
+^
+
+
+
+#our choice section
+[1]
+$(DBOXTITLE) string Choice Menu
+#choice sections begin ?? followed by the menu title, if any
+??choose one, $(insult):
+#? specifies a choice to display
+?  this is a good choice
+#the '>' specifies which section to send them to if they choose this option
+>2
+?  another option
+>2
+?  $(bad choice text variable)
+>3
+#?? ends the choice section/menu
+??
+
+
+#they chose badly (we told them not to)
+[3]
+#use an eval ('!$(VAR)') to give them another chance
+!$(STUPID)
+@4
+
+
+$(STUPID) bool true
+$(insult) string you nancy boy
+$(bad choice text variable) string i said DON'T choose this
+
+$(image) string $(DBOXIMG)
+$(DBOXTOP) bool true
+$(DBOXIMG) string images/cat_sailor.png
+$(DBOXTITLE) string Cat Sailor
+"In the name of cat sailors everywhere, i beg you please reconsider.
+^
+$(DBOXTOP) bool false
+$(DBOXIMG) string $(image)
+#jump back to section 1 (the choice menu)
+@1
+
+
+[4]
+$(DBOXIMG) string images/dialogimg_dead.png
+$(DBOXTITLE) string you are dead X_X
+$(FAILED) bool true
+"when your IQ rises to 28, sell ($(insult)).
+"you have failed
+#numbers can have whitespace between them and the first char, if you want
+E 0

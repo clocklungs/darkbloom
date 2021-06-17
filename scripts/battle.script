@@ -1,0 +1,17 @@
+#play cool music
+Msounds/PASS.MOD
+
+#start battle w/ 3 evil villains!
+b 3
+
+#remove this battle
+w visible = 0
+w collidable = 0
+w active = 0
+w c_script = NONE
+
+#display victory dialog, if we survived
+Ddialogs/victory.dialog
+
+#exit
+E1

@@ -1,0 +1,49 @@
+TODO: a list or queue or other structure to allow sounds started from a script
+      to play fully, but still be properly freed
+
+TODO: add per area (maybe per battle?) specifiable battle background image.
+      maybe just allow setting it via a scripting command?
+
+TODO: change map loader so that tile numbers don't signify the fileame
+      directly, but 'translate' to a name (per area specified) that
+      is easier to work w/ (sand.png instead of 123.png) and reduce
+      the map collision to 1 or 0 (solid or non-collidable)
+DONE: a tilelist is now specified after the enemylist. tilelist is in the
+      format of the tile_id_num (like 021) w/ or w/ out the leading zero or
+      leading spaces, followed by 1 space and the rest of that line (up to 99
+      chars long) is taken as the tile's graphic filename (example:
+      '021 tiles/sand.png')
+
+TODO: sort objects by areaname->layer in objects list and update
+      functions to take advantage of that
+
+TODO: more efficient image data usage (don't load the same image 20
+      times for 20 copies of the object, but don't create memory leaks
+      or crashes)
+
+TODO: support for animated objects in map file format (preferrably not
+      just another section for them, but use them in the same section
+      as normal objects)
+DONE: loader now checks the extension of the specified objects. if it
+      ends in '.anim' it is loaded as an animated object, otherwise
+      it defaults to regular objects (though, it will warn if the
+      object filename does not end in '.object')
+
+TODO: rewrite/extend scripting components or embed a real scripting
+      language like squirrel/lua/ruby.
+      most things could currently be hacked in by using special variables
+      (for example, to set the battle background image) however, it feels
+      like to much of a cop-out.
+
+TODO: fix fullscreen under win32. double buffering doesn't work
+      properly fullscreen and no double buffer leaves mouse artifacts
+      and causes flickering
+
+TODO: map/level editor. (tile (and object) placement at the least)
+
+TODO: save game system.
+
+TODO: maybe add right-click (mouse) to move next to a tile/object,
+      face the proper direction and activate it
+
+TODO: maybe add joystick support

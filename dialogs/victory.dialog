@@ -1,0 +1,6 @@
+$(DBOXTOP) bool true
+$(DBOXIMG) string images/cat_sailor.png
+$(DBOXTITLE) string VICTORY!
+
+"Yay! We didn't die!
+E1

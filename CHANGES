@@ -1,0 +1,174 @@
+darkbloom
+----------------------------------------------------------------------
+
+Fri Oct  7 10:51:51 EDT 2005
+  -fix: clipping rect still in effect when scripts are called from
+    collisions in Object.move()
+
+Tue Aug 30 09:19:45 EDT 2005
+  -use 'strrchr' instead of 'rindex' to support mingw
+
+Sun Aug 14 02:01:01 EDT 2005
+  -removed: world_graphics directory, old (numbered) maps. replaced
+    world_graphics images w/ named images (like grass.png) in tiles
+    directory
+  -added: Path class (part of base Object class) to handle NPC routes
+    currently there is no way to add a path, since i haven't decided
+    how exactly they should be specified (relative/absolute, from a
+    script or from a file, should they have delays? should they
+    execute scripts when you reach the waypoint?)
+
+Fri Aug 12 11:36:52 EDT 2005
+  -added: Object::move() function to handle the moving of an object
+    along a path. (currently it just moves the object as far as the
+    move_stack tells it to, since there is no path information. (only
+    the player's mouse navigation currently uses this)
+
+Thu Aug 11 12:11:49 EDT 2005
+  -added: segfault caused by attempting to insert animated objects
+    into the ObjectLayerList in the middle AND at the end if they were
+    supposed to go in the middle.
+  -fixed: segfault caused by attempting to insert animated objects
+    into the ObjectLayerList in the middle AND at the end if they were
+    supposed to go in the middle.
+  -maps now load tile graphic information from a tilelist (specified
+    as part of the map/level format)
+  -animated objects can be specified in the object section of the map
+    file format (they must end in .anim however)
+
+Fri Aug  5 13:32:11 EDT 2005
+  -remodelled worldloop to support animated object idle animations
+    it now runs smoother as well
+  -worldloop speed depends on value of 'msecs_per_frame' (global var)
+  -fixed: animated object idle animations only using frame 0
+  -fixed: animated object movement animation starting on frame 0
+  -added: bool flushJunkEvents(SDL_Event *event) (video.(hh/cc)
+  -updated: rod_anim_down.(png/xcf) to have an idle animation
+  -idle animation frame interval temporarily hardcoded at 250ms until
+    per frame intervals are added to the animated object format, and
+    the movement animation frame interval to 100ms
+  -mouse clicks while walking to a tile, set the new tile as the
+    destination (you can change direction before you walk all the way)
+
+Tue Aug  2 15:37:25 EDT 2005
+  -nmystuff and bossstuff structs merged into Enemy class
+    life changed to hp, magic to mp, str to strength, etc
+  -enemylist specification added to map file format
+  -enemies now loaded on a per area basis
+  -fixed several battle crashes when < 3 enemy types are loaded
+  -battle fonts are now freed in the battle destruct function
+  -new enemy type graphics: Rat, GiantRat
+  -added BUGS file to keep track of known bugs/issues
+  -enemy x, y offsets now respected when drawing enemies
+  -removed ed's unused code
+
+Fri Jul 29 04:55:25 EDT 2005
+  -use CXX instead of CPP in Makefile
+  -battle system added/started (roderick)
+  -stack added (roderick), converted to use Direction enum
+  -lots of .cc & .hh files from ed
+  -initial (and probably final) script system
+  -interpolateVars() now takes a VAR_paramList to interpolate from
+    ditto for processVar()
+  -A* pathfinding (rod)
+    fix: dyslexic pathfinding (rod)
+    fix: walking away when you can't get any closer (pathfinding) (rod)
+  -rewrote most of rod's world code (now it's World class code!) to
+    work w/ the Object classes better
+  -Object and AnimatedObject classes completed
+  -proper object layering
+  -rewrote 'worldLoop' (the game loop, basically)
+  -collisions and activation trigger scripts
+  -connected mouseclicks to pathfinding/integrated pathfinding w/
+    objects
+  -changed a bunch of SDL_GetError calls to more appropriate
+    IMG_GetError
+  -Object collisions/Object movement
+  -animated player moving (from tile to tile)
+  -removed rod's world moving and collision functions
+  -WHO KNOWS WHAT ELSE, ONLY CVS CAN SAY FOR SURE
+
+Mon Jul 25 02:08:43 EDT 2005
+  -added a 'poisoned' visual effect to the sidebar
+  -added beginnings of an 'Object' class
+  -changed equiped weapon sidebar images to 45x45
+  -added what will become a map editor (and its makefile)
+
+Sun Jul 24 18:33:22 EDT 2005
+  -sidebar added
+  -maps updated to include an area name
+
+Sat Jul 23 18:03:55 EDT 2005
+  -integrated rod's world and plyr code
+  -added some error checking to map loader/plyr code
+  -tiles are expected to be 3 digits (leading zeros accepted)
+  -changes to world.hh #defines (WIDTH -> TILEWIDTH etc)
+  -added map and world_graphics directories
+
+Sat Jul 23 10:50:36 EDT 2005
+  -sound effect WAVs reencoded as .ogg
+
+Sat Jul 23 00:11:46 EDT 2005
+  -removed some debugging output
+  -updated sounds/music/fullscreen toggles
+  -fullscreen workaround for win32 (mouse sometimes leaves artifacts)
+  -updateDisplay() replaces all direct calls to SDL_Flip
+  -mouse and sound support for dialog boxes
+  -version information available as a command-line option
+  -changed music to 'midori hirano - i was'
+  -updated license information in sounds directory
+  -fixed: flicker when displaying dialog boxes in sequence
+  -music and sound enabled by default
+  -some code reformatting and commenting
+  -separated logos into own functions
+  -sample outro added
+  -allow sounds/music/fullscreen toggle at any point in game
+  -removed dialog testapp (it wasn't much anyway)
+  -added toInt() function to params and parameter lists
+  -updated dev-c++ project
+  -don't open the display window until graphics are loaded
+  -new sound function to load and begin playing direct from file
+  -all sounds stopped and freed manually on exit
+  -fixed: segfault on inserting/setting a var w/ NULL value pointer
+  -removed all opengl video code (it was already commented out)
+  -delay() is escapeable by default
+
+Fri Jul 22 00:22:04 EDT 2005
+  -removed alot of debugging output
+  -dialog system seems to be entirely workable
+  -variable interpolation in strings/jumps/choices/exits/etc
+
+Thu Jul 21 17:55:06 EDT 2005
+  -dialog system more and less in place (though there is currently a
+    bug somewhere that relates to declaration of variables that
+    contain spaces in the variable name (might be only string vars).
+
+Thu Jul 21 03:26:25 EDT 2005
+  -changed test_dialog target in Makefile (yet again)
+  -test_dialog is now a windowed app and takes a dialog via cmd-line
+  -some code re(dis)organization
+  -graphical aspects of dialogbox system started
+  -images/dialogbox.png image added
+  -new SDL_Delay() wrapper function delay()
+  -intro movies/logos are now skippable/quitable/and stay visible
+  -MAIN MENU flushes events before selecting menu items
+  -flushEvents() no longer ignores SDL_QUIT event
+  -added bgmusic sounds/factor6-axel_funk.ogg
+  -added eval() function to VAR_paramList class
+  -fixed segfault in VAR_paramList.flush()
+  -disabled unicode translation, since we don't have text input
+  -removed temporary gameLoop() code
+  -disable fullscreen under windows (until it is fixed)
+
+Tue Jul 19 22:27:56 EDT 2005
+  -added dialog system
+  -everything is compiled as c++ now (to ease the mixing of c and c++)
+  -all files renamed from *.c *.h to *.cc *.hh
+
+Mon Jul 18 15:40:55 EDT 2005
+  -added dev-cpp project (for ed)
+  -fixed mingw32 compile issues
+
+Sat Jul 16 13:35:31 EDT 2005
+  -initial menu system
+  -initial config system

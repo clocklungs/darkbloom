@@ -1,0 +1,50 @@
+$(VARNAME) string your mom
+  creates or sets a variable named VARNAME of type 'string' with
+  the value 'your mom'. valid types are int/float/bool/string.
+
+[1]
+  denotes a section (in this case, section 1). used by jumps.
+  the closing bracket is not required.
+
+@1
+  jumps to the section number specified. target section number
+  can be a variable (@ $(EXIT_SECTION) for instance)
+
+!$(VARNAME)
+  evaluates the variable (in this case VARNAME) as true or false
+  and skips the next command if the eval was false
+
+dialog system special variables
+the effect will take place on the next dialogbox displayed
+
+DBOXTOP
+  evaluated as: bool
+  effect:
+    if true dialogbox is drawn at the top of the screen
+    else it is drawn at the bottom
+
+DBOXTITLE
+  evaluated as: string
+  effect:
+    used to set the title/caption of the dialogbox
+
+DBOXIMG
+  evaluated as: string
+  effect:
+    determines the image file to load and display in the dialogbox
+
+DBOXSND
+  evaluated as: string
+  effect:
+    determines the sound file to load and play
+    the value is auto automatically cleared and the sound stopped when
+    the dialogbox is closed
+
+DBOXSNDLOOPS
+  evaluated as: int
+  effect:
+    determines how many additional times to play the dialogbox sound.
+    a value of 1 plays the sound effect 2 times total. -1 will attempt
+    to loop forever. automatically reset to 0 when closed.
+
+EOF

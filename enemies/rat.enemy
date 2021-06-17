@@ -1,0 +1,9 @@
+name: Rat
+hp: 20
+strength: 12
+agility: 22
+xp: 20
+graphic_idle: enemies/images/rat_idle.png
+graphic_attack: enemies/images/rat_attack.png
+offset_x: 0
+offset_y: 50

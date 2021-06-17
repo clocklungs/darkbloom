@@ -1,0 +1,9 @@
+name: Blueguy
+hp: 20
+strength: 12
+agility:  24
+xp: 20
+graphic_idle: images/nmy3.png
+graphic_attack: images/nmy3attack.png
+offset_x: 0
+offset_y: 0

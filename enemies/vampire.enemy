@@ -1,0 +1,9 @@
+name: Vampire
+hp: 20
+strength: 12
+agility: 22
+xp: 20
+graphic_idle: images/nmy1.png
+graphic_attack: images/nmy1attack.png
+offset_x: 0
+offset_y: 0

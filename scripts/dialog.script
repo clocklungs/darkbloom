@@ -1,0 +1,18 @@
+Ddialogs/sample.dialog
+!$(DIALOG_RETVAL)
+@2
+@1
+
+[1]
+E 1
+
+
+[2]
+w visible = 0
+w collidable = 0
+w persistent = 1
+w a_script = NONE
+Lmaps/next.map
+P 3 3
+E 1
+

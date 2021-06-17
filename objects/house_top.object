@@ -1,0 +1,15 @@
+name: HouseTop
+visible: 1
+persistent: 0
+active: 1
+zindex: 1.999
+offset_x: -64
+offset_y: -192
+image: images/house_top.png
+frame_size.x: 0
+frame_size.y: 0
+frame_size.w: 192
+frame_size.h: 224
+a_script: NONE
+c_script: scripts/make_invisible.script
+collidable: NONE

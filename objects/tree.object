@@ -1,0 +1,15 @@
+name: Tree
+visible: 1
+persistent: 0
+active: 1
+zindex: 2
+offset_x: -32
+offset_y: -64
+image: images/tree.png
+frame_size.x: 0
+frame_size.y: 0
+frame_size.w: 96
+frame_size.h: 96
+a_script: scripts/start.script
+c_script: NONE
+collidable: FULL
