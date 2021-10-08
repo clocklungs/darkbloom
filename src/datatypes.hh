@@ -3,10 +3,9 @@
 
 #define STACKSIZE 100
 
-typedef enum {DOWN=0, UP=1, LEFT=2, RIGHT=3} Direction;
+typedef enum { DOWN = 0, UP = 1, LEFT = 2, RIGHT = 3 } Direction;
 
-class Stack
-{
+class Stack {
   public:
     Direction stack[STACKSIZE];
     int stack_len;

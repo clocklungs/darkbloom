@@ -20,58 +20,49 @@ modified:
 
 #include <string>
 
+extern const char *VAR_GetError();
 
-extern const char* VAR_GetError();
+typedef enum VAR_datatype { VAR_STRING, VAR_BOOL, VAR_INT, VAR_FLOAT } VAR_datatype;
 
-
-typedef enum VAR_datatype {VAR_STRING, VAR_BOOL, VAR_INT, VAR_FLOAT} VAR_datatype;
-
-
-typedef union VAR_paramData
-{
-  std::string *string_data;
-  bool bool_data;
-  int int_data;
-  float float_data;
+typedef union VAR_paramData {
+    std::string *string_data;
+    bool bool_data;
+    int int_data;
+    float float_data;
 } VAR_paramData;
 
-
-class VAR_param
-{
+class VAR_param {
   public:
     std::string key;
     VAR_datatype type;
     VAR_paramData data;
     bool persistent;
     VAR_param *next;
-    
+
     VAR_param();
     VAR_param(const char *k);
     ~VAR_param();
     void setData(VAR_datatype datatype, const void *value);
     bool eval();
-    char* toString(char *buffer, int num);
+    char *toString(char *buffer, int num);
     int toInt();
 };
-
 
 /*this would make more sense as a tree, for speed
 unless we ever start deleting individual parameters
 but probably won't use enough vars to make much difference*/
-class VAR_paramList
-{
+class VAR_paramList {
   private:
     VAR_param *head;
+
   public:
     VAR_paramList();
     ~VAR_paramList();
-    VAR_param* set(const char *param,
-                   const char *datatype,
-                   const void *value);
-    VAR_param* get(const char *param);
-    VAR_param* persist(const char *param);
+    VAR_param *set(const char *param, const char *datatype, const void *value);
+    VAR_param *get(const char *param);
+    VAR_param *persist(const char *param);
     bool eval(const char *param);
-    char* toString(const char *param, char *buffer, int num);
+    char *toString(const char *param, char *buffer, int num);
     int toInt(const char *param);
     void flush();
     void clear();

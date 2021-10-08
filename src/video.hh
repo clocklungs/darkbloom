@@ -1,11 +1,11 @@
 #ifndef VIDEO_HH
 #define VIDEO_HH
 
-#include <stdlib.h>
-#include <SDL2/SDL.h>
 #include "config.hh"
+#include <SDL2/SDL.h>
+#include <stdlib.h>
 
-#define MSECS_PER_FRAME 1000/20
+#define MSECS_PER_FRAME 1000 / 20
 
 /*global variables*/
 extern SDL_Surface *screen; /*display surface*/
@@ -16,7 +16,7 @@ void initVideo(const char *title);
 void toggleFullscreen();
 void flushEvents();
 bool flushJunkEvents(SDL_Event *event);
-void delay(unsigned int ms, bool escapeable=true);
+void delay(unsigned int ms, bool escapeable = true);
 void updateDisplay();
 int checkToggles(const SDL_Scancode scancode);
 

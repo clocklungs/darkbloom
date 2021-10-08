@@ -6,8 +6,8 @@ modified:
 
 *********************************************************************/
 
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -15,18 +15,17 @@ modified:
 
 #include "button.hh"
 #include "config.hh"
+#include "dbox.hh"
+#include "dialog.hh"
 #include "font.hh"
 #include "game.hh"
 #include "intro.hh"
 #include "menus.hh"
+#include "object.hh"
+#include "plyr.hh"
 #include "sound.hh"
 #include "video.hh"
-#include "dialog.hh"
-#include "dbox.hh"
 #include "world.hh"
-#include "plyr.hh"
-#include "object.hh"
-
 
 /*global variables*/
 SDL_Surface *screen, *menuBackground, *world_image, *sideBar;
@@ -46,70 +45,61 @@ std::string areaname;
 int gold;
 int dbox_line;
 unsigned int msecs_per_frame = MSECS_PER_FRAME;
-char dbox_lines[DBOX_MAXLINES][DBOX_TEXTMAX+1];
+char dbox_lines[DBOX_MAXLINES][DBOX_TEXTMAX + 1];
 bool game_started = false;
-
 
 void showVersionInfo();
 
-
 int main(int argc, char **argv) {
 
-  /*just for giggles*/
-  if(argc > 1 && !strcmp("--version", argv[1]))
-  {
-    showVersionInfo();
-    return 0;
-  }
+    /*just for giggles*/
+    if (argc > 1 && !strcmp("--version", argv[1])) {
+        showVersionInfo();
+        return 0;
+    }
 
-  loadConfig();
+    loadConfig();
 
-  initSDL();
+    initSDL();
 
-  initGraphics();
+    initGraphics();
 
-  initVideo(GAMENAME);
+    initVideo(GAMENAME);
 
-  initSound();
+    initSound();
 
-  showIntro();
+    showIntro();
 
-  /*respawn main menu until exit*/
-  while(mainMenu());
+    /*respawn main menu until exit*/
+    while (mainMenu())
+        ;
 
-  saveConfig();
+    saveConfig();
 
-  showOutro();
+    showOutro();
 
-  /*shut down sdl*/
-  SDL_Quit();
+    /*shut down sdl*/
+    SDL_Quit();
 
-  return 8008135;
+    return 8008135;
 }
 
+void showVersionInfo() {
+    SDL_version compile;
+    SDL_version linked;
 
-void showVersionInfo()
-{
-  SDL_version compile;
-  SDL_version linked;
+    /*display version info*/
+    printf("%s - %s\n", GAMENAME, GAMEVERSION);
 
-  /*display version info*/
-  printf("%s - %s\n", GAMENAME, GAMEVERSION);
+    /*display SDL version info*/
+    SDL_VERSION(&compile);
+    SDL_GetVersion(&linked);
+    printf("SDL %d.%d.%d(compiled)/%d.%d.%d (linked)\n", compile.major, compile.minor, compile.patch, linked.major, linked.minor, linked.patch);
 
-  /*display SDL version info*/
-  SDL_VERSION(&compile);
-  SDL_GetVersion(&linked);
-  printf("SDL %d.%d.%d(compiled)/%d.%d.%d (linked)\n",
-         compile.major, compile.minor, compile.patch,
-         linked.major, linked.minor, linked.patch);
-
-  /*display SDL_mixer version info*/
-  MIX_VERSION(&compile);
-  const SDL_version *link = Mix_Linked_Version();
-  printf("SDL_mixer %d.%d.%d(compiled)/%d.%d.%d (linked)\n",
-         compile.major, compile.minor, compile.patch,
-         link->major, link->minor, link->patch);
+    /*display SDL_mixer version info*/
+    MIX_VERSION(&compile);
+    const SDL_version *link = Mix_Linked_Version();
+    printf("SDL_mixer %d.%d.%d(compiled)/%d.%d.%d (linked)\n", compile.major, compile.minor, compile.patch, link->major, link->minor, link->patch);
 }
-
 
 /*EOF*/

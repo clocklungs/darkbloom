@@ -2,10 +2,10 @@
 #define CONFIG_HH
 
 typedef struct {
-  int sounds;
-  int music;
-  int fullscreen;
-  } Config;
+    int sounds;
+    int music;
+    int fullscreen;
+} Config;
 
 extern Config config;
 

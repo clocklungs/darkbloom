@@ -4,11 +4,8 @@
 #include <SDL2/SDL.h>
 
 typedef struct {
-  int top,
-      left,
-      bottom,
-      right;
-  int active;
+    int top, left, bottom, right;
+    int active;
 } Button;
 
 int clicked(SDL_MouseButtonEvent *mouse, Button button);

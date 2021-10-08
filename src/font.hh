@@ -1,19 +1,16 @@
 #ifndef FONT_HH
 #define FONT_HH
 
-
-#include <stdlib.h>
-#include <string.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-
+#include <stdlib.h>
+#include <string.h>
 
 typedef struct {
-  SDL_Surface *font;
-  int w;
-  int h;
+    SDL_Surface *font;
+    int w;
+    int h;
 } Font;
-
 
 void initFont(Font *font, const char *filename);
 void freeFont(Font *font);

@@ -8,5 +8,4 @@ extern AnimatedObject player;
 void stats_init();
 void player_init();
 
-
 #endif

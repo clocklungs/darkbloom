@@ -1,8 +1,8 @@
 #ifndef GAME_HH
 #define GAME_HH
 
-#include <SDL2/SDL.h>
 #include "font.hh"
+#include <SDL2/SDL.h>
 
 #define GAMENAME "d4|2kbl00m"
 #define GAMEVERSION "alpha 0.06"
