@@ -272,6 +272,7 @@ int processVar(char *string, VAR_paramList &vars)
 }
 
 
+char interpolate_vars_buffer[2048];
 const char* interpolateVars(char *string, VAR_paramList &vars)
 {
   std::string output;
@@ -310,7 +311,9 @@ const char* interpolateVars(char *string, VAR_paramList &vars)
     }
     output += *(string++);
   }
-  return output.c_str();
+  strncpy(interpolate_vars_buffer, output.c_str(), 2048);
+  interpolate_vars_buffer[2047] = '\0';
+  return interpolate_vars_buffer;
 }
 
 

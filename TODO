@@ -1,3 +1,5 @@
+TODO: Migrate to SDL2
+
 TODO: a list or queue or other structure to allow sounds started from a script
       to play fully, but still be properly freed
 
