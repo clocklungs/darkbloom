@@ -43,5 +43,3 @@ TODO: maybe add right-click (mouse) to move next to a tile/object,
       face the proper direction and activate it
 
 TODO: maybe add joystick support
-
-TODO: Change player movement controls to use keyboard state instead of keydown + key repeat (aka, make player movement smooth)

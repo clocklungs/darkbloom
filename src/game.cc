@@ -124,9 +124,6 @@ void worldLoop()
 
   updateDisplay();
 
-  // TODO: Update controls to just check key state instead of relying on key repeat
-  //SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
-
   oldticks = SDL_GetTicks();
 
   flushEvents();
@@ -166,32 +163,16 @@ void worldLoop()
     }
 
     //printf("DEBUG: elapsed: %i\n", ticks-oldticks);
+    const Uint8 *keys = SDL_GetKeyboardState(NULL);
+    if (keys[SDL_SCANCODE_UP]) { collide_object = player.up(); }
+    else if (keys[SDL_SCANCODE_DOWN]) { collide_object = player.down(); }
+    else if (keys[SDL_SCANCODE_LEFT]) { collide_object = player.left(); }
+    else if (keys[SDL_SCANCODE_RIGHT]) { collide_object = player.right(); }
 
     if(goodevent)
     {/*main even loop*/
       switch(event.type)
       {
-        /*keydown events can repeat, be careful what you put here*/
-        // TODO: switch to SDL_GetKeyboardState and check the returned "keys" state
-        case SDL_KEYDOWN:
-          switch(event.key.keysym.scancode)
-          {
-            case SDL_SCANCODE_DOWN:
-              collide_object = player.down();
-              break;
-            case SDL_SCANCODE_UP:
-              collide_object = player.up();
-              break;
-            case SDL_SCANCODE_LEFT:
-              collide_object = player.left();
-              break;
-            case SDL_SCANCODE_RIGHT:
-              collide_object = player.right();
-              break;
-            default:
-              break;
-          }
-          break;
         /*these will only happen once per keypress->keyrelease*/
         case SDL_KEYUP:
           switch(event.key.keysym.scancode)
