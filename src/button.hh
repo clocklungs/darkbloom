@@ -1,7 +1,7 @@
 #ifndef BUTTON_HH
 #define BUTTON_HH
 
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 
 typedef struct {
   int top,

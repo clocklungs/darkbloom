@@ -12,6 +12,31 @@ struct {
 } video;
 
 
+SDL_Window *window;
+SDL_Renderer *renderer;
+SDL_Texture *screenTexture;
+
+#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+    const Uint32 rmask = 0xff000000;
+    const Uint32 gmask = 0x00ff0000;
+    const Uint32 bmask = 0x0000ff00;
+    const Uint32 amask = 0x000000ff;
+#else
+    const Uint32 rmask = 0x000000ff;
+    const Uint32 gmask = 0x0000ff00;
+    const Uint32 bmask = 0x00ff0000;
+    const Uint32 amask = 0xff000000;
+#endif
+
+SDL_Surface *create_rgba_surface(const unsigned int width, const unsigned int height) {
+    SDL_Surface *surface = SDL_CreateRGBSurface(SDL_SWSURFACE, width, height, 32, rmask, gmask, bmask, amask);
+    if (surface == NULL) {
+        fprintf(stderr, "SDL_CreateRGBSurface failed: %s\n", SDL_GetError());
+        exit(3);
+    }
+    return surface;
+}
+
 /*initialize SDL and display*/
 void initSDL()
 {
@@ -38,7 +63,7 @@ void initVideo(const char *title)
   video.bpp       = 0;
 
   /*set video _flags for 2d and 3d (openGL) modes*/
-  video.sdl_flags=SDL_HWSURFACE|SDL_DOUBLEBUF|SDL_ANYFORMAT;
+  video.sdl_flags=0; //SDL_HWSURFACE|SDL_DOUBLEBUF|SDL_ANYFORMAT;
 
 #ifdef WIN32
   /*attempt to work around fullscreen bug under windows*/
@@ -49,40 +74,46 @@ void initVideo(const char *title)
 #endif
 
   /*change to initial mode*/
-  changeModeSDL();
-  SDL_WM_SetCaption(title, title);
+  window = SDL_CreateWindow(
+    title,
+    SDL_WINDOWPOS_UNDEFINED,
+    SDL_WINDOWPOS_UNDEFINED,
+    1024, 768,
+    SDL_WINDOW_RESIZABLE
+  );
+  if (window == NULL) {
+    fprintf(stderr, "Error creating game window: %s\n", SDL_GetError());
+    exit(EXIT_FAILURE);
+  }
+
+  renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);
+  if (renderer == NULL) {
+    fprintf(stderr, "Error creating game renderer: %s\n", SDL_GetError());
+    exit(EXIT_FAILURE);
+  }
+  SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");  // make the scaled rendering look smoother.
+  SDL_RenderSetLogicalSize(renderer, 640, 480); // TODO: use video.w/.h?
+
+  screenTexture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_STREAMING, 640, 480);
+  screen = create_rgba_surface(640, 480);
 
   /*initialize dialogbox backup surface*/
+  // TODO: use create_rgba_surface()
   dbox_back = SDL_CreateRGBSurface(screen->flags, dbox->w, dbox->h,
                                    screen->format->BitsPerPixel,
                                    screen->format->Rmask,
                                    screen->format->Gmask,
                                    screen->format->Bmask,
                                    screen->format->Amask);
-  if(dbox_back == NULL)
-  {
+  if(dbox_back == NULL) {
     fprintf(stderr, "unable to initialize dialog box: %s\n", SDL_GetError());
     exit(1);
   }
 }
 
-
-void changeModeSDL()
-{
-  /*set video mode to w x _h x bpp (with fullscreen toggle checked)*/
-  screen=SDL_SetVideoMode(video.w, video.h, video.bpp, config.fullscreen?
-                          video.sdl_flags|SDL_FULLSCREEN:video.sdl_flags);
-  if(screen==NULL)
-  {
-    fprintf(stderr, "unable to set %ix%i video mode: %s\n", video.w, video.h,
-            SDL_GetError());
-    exit(1);
-  }
-}
-
-
 void toggleFullscreen()
 {
+  // TODO: Is this screen saving stuff needed?
   SDL_Surface *save;
 
   /*create surface to save the screen's content*/
@@ -100,27 +131,15 @@ void toggleFullscreen()
 
   /*toggle fullscreen flag*/
   config.fullscreen = !config.fullscreen;
-#ifdef WIN32
-  /*attempt to work around fullscreen bug under windows*/
-  if(config.fullscreen)
-  {
-    /*disable double buffering*/
-    video.sdl_flags &= ~SDL_DOUBLEBUF;
-  }
-  else
-  {
-    /*enable double buffering*/
-    video.sdl_flags |= SDL_DOUBLEBUF;
-  }
-#endif
-  /*switch mode to/from fullscreen*/
-  changeModeSDL();
+  SDL_SetWindowFullscreen(window, config.fullscreen ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0);
+
   /*restore screen contents*/
   SDL_BlitSurface(save, NULL, screen, NULL);
-  /*update*/
-  updateDisplay();
   /*free save surface memory*/
   SDL_FreeSurface(save);
+
+  /*update*/
+  updateDisplay();
 }
 
 
@@ -201,7 +220,7 @@ void delay(unsigned int ms, bool escapeable)
               return;
             default:
               /*check for sound/music/fullscreen toggle*/
-              checkToggles(event.key.keysym);
+              checkToggles(event.key.keysym.scancode);
               continue;
           }
         }
@@ -213,30 +232,25 @@ void delay(unsigned int ms, bool escapeable)
 
 void updateDisplay()
 {
-#ifdef WIN32
-  /*we don't use double buffer for fullscreen under win32*/
-  if(config.fullscreen)
-  {
-    SDL_UpdateRect(screen, 0, 0, 0, 0);
-    return;
-  }
-#endif
-  SDL_Flip(screen);
+  SDL_UpdateTexture(screenTexture, NULL, screen->pixels, screen->pitch);
+  SDL_RenderClear(renderer); // clear
+  SDL_RenderCopy(renderer, screenTexture, NULL, NULL); // render the whole screenTexture
+  SDL_RenderPresent(renderer); // update the display hardware
 }
 
 
 /*check the sounds/music/fullscreen toggle buttons*/
-int checkToggles(SDL_keysym key)
+int checkToggles(const SDL_Scancode scancode)
 {
-  switch(key.sym)
+  switch(scancode)
   {
-    case SDLK_F2:
+    case SDL_SCANCODE_F2:
       toggleSounds();
       return 1;
-    case SDLK_F3:
+    case SDL_SCANCODE_F3:
       toggleMusic();
       return 2;
-    case SDLK_F11:
+    case SDL_SCANCODE_F11:
       toggleFullscreen();
       return 3;
     default:

@@ -116,7 +116,7 @@ int dboxChoice(const char *title, Choice choices[DBOX_CHOICES])
           selected = curr;
           break;
         default:
-          checkToggles(event.key.keysym);
+          checkToggles(event.key.keysym.scancode);
           break;
       }
     }

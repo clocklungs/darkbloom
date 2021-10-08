@@ -1,5 +1,3 @@
-TODO: Migrate to SDL2
-
 TODO: a list or queue or other structure to allow sounds started from a script
       to play fully, but still be properly freed
 
@@ -37,10 +35,6 @@ TODO: rewrite/extend scripting components or embed a real scripting
       (for example, to set the battle background image) however, it feels
       like to much of a cop-out.
 
-TODO: fix fullscreen under win32. double buffering doesn't work
-      properly fullscreen and no double buffer leaves mouse artifacts
-      and causes flickering
-
 TODO: map/level editor. (tile (and object) placement at the least)
 
 TODO: save game system.
@@ -49,3 +43,5 @@ TODO: maybe add right-click (mouse) to move next to a tile/object,
       face the proper direction and activate it
 
 TODO: maybe add joystick support
+
+TODO: Change player movement controls to use keyboard state instead of keydown + key repeat (aka, make player movement smooth)

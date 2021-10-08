@@ -1,13 +1,13 @@
 #warnings and strictness
-CFLAGS=-Wall -pedantic
+CFLAGS=-Wall -pedantic -std=c++11
 
 #sdl flags
-CFLAGS+=$(shell sdl-config --cflags)
+CFLAGS+=$(shell sdl2-config --cflags)
 
 CXXFLAGS= $(CFLAGS)
 
 #sdl libs
-LIBS=$(shell sdl-config --libs) -lSDL_image -lSDL_mixer
+LIBS=$(shell sdl2-config --libs) -lSDL2_image -lSDL2_mixer
 
 #c compiler
 CC=gcc

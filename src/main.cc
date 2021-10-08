@@ -9,9 +9,9 @@ modified:
 #include <stdlib.h>
 #include <stdio.h>
 
-#include <SDL/SDL.h>
-#include <SDL/SDL_image.h>
-#include <SDL/SDL_mixer.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_mixer.h>
 
 #include "button.hh"
 #include "config.hh"
@@ -91,21 +91,21 @@ int main(int argc, char **argv) {
 void showVersionInfo()
 {
   SDL_version compile;
-  const SDL_version *link;
+  SDL_version linked;
 
   /*display version info*/
   printf("%s - %s\n", GAMENAME, GAMEVERSION);
 
   /*display SDL version info*/
   SDL_VERSION(&compile);
-  link = SDL_Linked_Version();
+  SDL_GetVersion(&linked);
   printf("SDL %d.%d.%d(compiled)/%d.%d.%d (linked)\n",
          compile.major, compile.minor, compile.patch,
-         link->major, link->minor, link->patch);
+         linked.major, linked.minor, linked.patch);
 
   /*display SDL_mixer version info*/
   MIX_VERSION(&compile);
-  link = Mix_Linked_Version();
+  const SDL_version *link = Mix_Linked_Version();
   printf("SDL_mixer %d.%d.%d(compiled)/%d.%d.%d (linked)\n",
          compile.major, compile.minor, compile.patch,
          link->major, link->minor, link->patch);

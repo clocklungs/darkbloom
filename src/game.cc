@@ -124,8 +124,8 @@ void worldLoop()
 
   updateDisplay();
 
-  SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY,
-                      SDL_DEFAULT_REPEAT_INTERVAL);
+  // TODO: Update controls to just check key state instead of relying on key repeat
+  //SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
 
   oldticks = SDL_GetTicks();
 
@@ -172,19 +172,20 @@ void worldLoop()
       switch(event.type)
       {
         /*keydown events can repeat, be careful what you put here*/
+        // TODO: switch to SDL_GetKeyboardState and check the returned "keys" state
         case SDL_KEYDOWN:
-          switch(event.key.keysym.sym)
+          switch(event.key.keysym.scancode)
           {
-            case SDLK_DOWN:
+            case SDL_SCANCODE_DOWN:
               collide_object = player.down();
               break;
-            case SDLK_UP:
+            case SDL_SCANCODE_UP:
               collide_object = player.up();
               break;
-            case SDLK_LEFT:
+            case SDL_SCANCODE_LEFT:
               collide_object = player.left();
               break;
-            case SDLK_RIGHT:
+            case SDL_SCANCODE_RIGHT:
               collide_object = player.right();
               break;
             default:
@@ -193,19 +194,19 @@ void worldLoop()
           break;
         /*these will only happen once per keypress->keyrelease*/
         case SDL_KEYUP:
-          switch(event.key.keysym.sym)
+          switch(event.key.keysym.scancode)
           {
-            case SDLK_ESCAPE:
+            case SDL_SCANCODE_ESCAPE:
               return;
-            case SDLK_SPACE:
+            case SDL_SCANCODE_SPACE:
               /*start a boss battle.
               this is here for debugging purposes,
               SPACE should probably be used as another 'activate' button*/
               load_boss("enemies/giant_rat.boss");
               battleloop(2,1);
               break;
-            case SDLK_RETURN:
-            case SDLK_KP_ENTER:
+            case SDL_SCANCODE_RETURN:
+            case SDL_SCANCODE_KP_ENTER:
               active_object = player.activate();
               if(active_object != NULL)
               {
@@ -215,7 +216,7 @@ void worldLoop()
               }
               break;
             default:
-              checkToggles(event.key.keysym);
+              checkToggles(event.key.keysym.scancode);
               break;
           }
           break;

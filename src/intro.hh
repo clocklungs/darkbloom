@@ -1,7 +1,7 @@
 #ifndef INTRO_HH
 #define INTRO_HH
 
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 
 extern SDL_Surface *screen;
 

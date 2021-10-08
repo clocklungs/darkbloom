@@ -2,7 +2,7 @@
 #define WORLD_HH
 
 #include <string>
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 #include "object.hh"
 
 #define WWDISPLAY 15

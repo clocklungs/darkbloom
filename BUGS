@@ -16,6 +16,3 @@ BUG: battles do not end when everyone dies.
 BUG: dead player can still attack enemies in battle mode (if the
      player was selected before they died)
 
-BUG: mouse sometimes leaves artifacts in fullscreen mode win32
-
-BUG: fullscreen mode toggle under win32 sometimes leaves black screen

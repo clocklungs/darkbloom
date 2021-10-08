@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include <SDL/SDL_image.h>
+#include <SDL2/SDL_image.h>
 
 #include "menus.hh"
 #include "config.hh"
@@ -118,7 +118,7 @@ int mainMenu()
           break;
         default:
           /*toggle music/sound/fullscreen*/
-          if(checkToggles(event.key.keysym) == 3) return 1;
+          if(checkToggles(event.key.keysym.scancode) == 3) return 1;
           break;
       } /*endof switch(event.key.keysym.sym)*/
     }
@@ -180,7 +180,7 @@ int optionMenu(int curr) {
   SDL_Event event;
   Font *font, *hlfont;
   int i, top, left, items, width, prev, selected;
-  SDLKey key;
+  SDL_Keycode key;
   const char *text[] = {
                 "Fullscreen: ",
                 "Sounds: ",
@@ -290,7 +290,7 @@ int optionMenu(int curr) {
           break;
         default:
           /*check music/sound/fullscreen toggles*/
-          if(checkToggles(event.key.keysym)) return curr;
+          if(checkToggles(event.key.keysym.scancode)) return curr;
           break;
         } /*endof switch(event.key.keysym.sym)*/
       }

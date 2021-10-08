@@ -6,8 +6,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
-#include <SDL/SDL.h>
-#include <SDL/SDL_image.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include "battle.hh"
 #include "font.hh"
 #include "sidebar.hh"
@@ -303,7 +303,6 @@ void battle_destruct()
 
 bool battleloop(int nmy, int boss)
   {/*the main loop true true survied battle false died*/
-  Uint8* keys;
   SDL_Event event;
   int selected_menu_choice =0;
   int select_enemy = 1;
@@ -319,11 +318,11 @@ bool battleloop(int nmy, int boss)
   blitscreen(0,0);
   enemy_turn=12;
   updateDisplay();
-  
+
   while((SDL_WaitEvent(&event)))
     {/*main even loop*/
     enemy_turn++;
-    
+
     for(int go=0;go<nmy;go++)
       {
       if(enemy_turn%battle_enemies[go].agility==0 && battle_enemies[go].dead==1)
@@ -345,18 +344,19 @@ bool battleloop(int nmy, int boss)
         break;
         }
       }  
-    keys=SDL_GetKeyState(NULL);
+    const Uint8* keys = SDL_GetKeyboardState(NULL);
+    // TODO: don't rely on both keys and event type, choose one that's appropriate
     switch(event.type)
       {
       case SDL_QUIT: /*quits program*/
         exit(0);
         break;
       case SDL_KEYDOWN: /*registars key down*/
-        if(keys[SDLK_DOWN])
+        if(keys[SDL_SCANCODE_DOWN])
           {
           selected_menu_choice++;
           }
-        else if(keys[SDLK_LEFT])
+        else if(keys[SDL_SCANCODE_LEFT])
           {
           if(select_enemy==0)
             {
@@ -393,7 +393,7 @@ bool battleloop(int nmy, int boss)
               }
             }
           }
-        else if(keys[SDLK_RIGHT])
+        else if(keys[SDL_SCANCODE_RIGHT])
           {
           if(select_enemy==0)
             {
@@ -430,11 +430,11 @@ bool battleloop(int nmy, int boss)
               }
             }
           }
-        else if(keys[SDLK_UP])
+        else if(keys[SDL_SCANCODE_UP])
           {
           selected_menu_choice--;
           }
-        else if(keys[SDLK_RETURN])
+        else if(keys[SDL_SCANCODE_RETURN])
           {
           if(selected_menu_choice==1 && menu_level==0)
             {
@@ -452,7 +452,7 @@ bool battleloop(int nmy, int boss)
             select_enemy=0;
             }
           }
-        else if(keys[SDLK_SPACE])
+        else if(keys[SDL_SCANCODE_SPACE])
           {/*FIX*/
           if(menu_level==1)
             {
@@ -463,7 +463,7 @@ bool battleloop(int nmy, int boss)
             select_enemy=1;
             }
           }
-        else if(keys[SDLK_ESCAPE])
+        else if(keys[SDL_SCANCODE_ESCAPE])
           {
           battle_destruct();
           exit(0);/*REMOVE*/
@@ -493,8 +493,7 @@ bool battleloop(int nmy, int boss)
         enemy_dead++;
         }
       }
-    
-    
+
     if(enemy_dead==currenemies)
       {/*giving exp and leveling really should be in it's own funciton*/
       int tmpexp;
