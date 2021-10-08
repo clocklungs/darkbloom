@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "SDL_image.h"
+#include <SDL/SDL_image.h>
 
 #include "menus.hh"
 #include "config.hh"

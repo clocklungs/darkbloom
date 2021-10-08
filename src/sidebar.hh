@@ -2,7 +2,7 @@
 #define SIDEBAR_HH
 
 #include <string>
-#include "SDL.h"
+#include <SDL/SDL.h>
 #include "plyr.hh"
 #include "var.hh"
 

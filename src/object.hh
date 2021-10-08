@@ -3,7 +3,7 @@
 
 #include <string>
 #include <stdio.h>
-#include "SDL.h"
+#include <SDL/SDL.h>
 #include "datatypes.hh"
 #include "path.hh"
 

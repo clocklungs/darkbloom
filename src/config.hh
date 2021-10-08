@@ -1,7 +1,7 @@
 #ifndef CONFIG_HH
 #define CONFIG_HH
 
-typedef struct Config {
+typedef struct {
   int sounds;
   int music;
   int fullscreen;

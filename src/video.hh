@@ -2,7 +2,7 @@
 #define VIDEO_HH
 
 #include <stdlib.h>
-#include "SDL.h"
+#include <SDL/SDL.h>
 #include "config.hh"
 
 #define MSECS_PER_FRAME 1000/20

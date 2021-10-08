@@ -11,7 +11,7 @@
 extern VAR_paramList dialog_vars;
 
 
-typedef struct Choice {
+typedef struct {
   std::string text;
   int value;
   bool active;

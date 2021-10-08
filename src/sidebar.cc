@@ -1,4 +1,4 @@
-#include "SDL.h"
+#include <SDL/SDL.h>
 #include "sidebar.hh"
 #include "video.hh"
 #include "game.hh"

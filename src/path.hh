@@ -1,7 +1,7 @@
 #ifndef PATH_HH
 #define PATH_HH
 
-#include "SDL.h"
+#include <SDL/SDL.h>
 
 
 class PathNode

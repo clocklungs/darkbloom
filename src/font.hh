@@ -4,11 +4,11 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include "SDL.h"
-#include "SDL_image.h"
+#include <SDL/SDL.h>
+#include <SDL/SDL_image.h>
 
 
-typedef struct Font {
+typedef struct {
   SDL_Surface *font;
   int w;
   int h;

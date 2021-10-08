@@ -1,9 +1,9 @@
 #ifndef BUTTON_HH
 #define BUTTON_HH
 
-#include "SDL.h"
+#include <SDL/SDL.h>
 
-typedef struct Button {
+typedef struct {
   int top,
       left,
       bottom,

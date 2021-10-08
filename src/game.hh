@@ -1,7 +1,7 @@
 #ifndef GAME_HH
 #define GAME_HH
 
-#include "SDL.h"
+#include <SDL/SDL.h>
 #include "font.hh"
 
 #define GAMENAME "d4|2kbl00m"
