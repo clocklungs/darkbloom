@@ -1,5 +1,5 @@
 #warnings and strictness
-CFLAGS=-Wall -ansi -pedantic
+CFLAGS=-Wall -pedantic
 
 #sdl flags
 CFLAGS+=$(shell sdl-config --cflags)

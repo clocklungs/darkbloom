@@ -85,7 +85,7 @@ int main(int argc, char **argv) {
   SDL_Quit();
 
   return 8008135;
-  }
+}
 
 
 void showVersionInfo()

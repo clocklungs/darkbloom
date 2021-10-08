@@ -9,7 +9,7 @@ struct {
   int h;             /*height*/
   int bpp;           /*bits per pixel (0 = desktop bpp)*/
   Uint32 sdl_flags;  /*video flags for sdl-only mode*/
-  } video;
+} video;
 
 
 /*initialize SDL and display*/

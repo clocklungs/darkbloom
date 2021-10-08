@@ -98,6 +98,7 @@ World createImage()
 *********************************************************************/
 void World::createImage(const char *filename)
 {
+  fprintf(stdout, "Creating world image for given tiles %s\n", filename);
   SDL_Surface *tiles[255];
   SDL_Rect dest;
   int i, x, y;
@@ -230,6 +231,7 @@ void World::createImage(const char *filename)
 
 void World::load(const char *filename)
 {
+  fprintf(stdout, "Loading %s\n", filename);
   FILE *in;
   char areaname[NAMELENGTH];
   std::string tilelist;

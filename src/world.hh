@@ -21,21 +21,19 @@ class World
 
     void createImage(const char *filename);
   public:
-    unsigned char world[WORLDHEIGHTMAX][WORLDWIDTHMAX];
-                        //world tile data
-    SDL_Rect viewable;  //viewable portion of the world
-    SDL_Rect viewport;  //screen position to display at
-    int w;              //width in tiles
-    int h;              //height in tiles
-    std::string name;   //current world name
+    unsigned char world[WORLDHEIGHTMAX][WORLDWIDTHMAX]; //world tile data
 
-    World();            //constructor
-    ~World();           //destructor
-    void draw();        //draw the world
-                        //load map from file
-    void load(const char *filename);
-                        //adjust viewable area of world to accomodate object
-    void follow(Object &object);
+    SDL_Rect viewable;  //viewable portion of the world
+    SDL_Rect viewport; //screen position to display at
+    int w; //width in tiles
+    int h; //height in tiles
+    std::string name; //current world name
+
+    World();  //constructor
+    ~World(); //destructor
+    void draw(); //draw the world
+    void load(const char *filename); //load map from file
+    void follow(Object &object); //adjust viewable area of world to accomodate object
 };
 
 extern World world;
