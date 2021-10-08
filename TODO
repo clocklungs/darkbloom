@@ -43,3 +43,5 @@ TODO: maybe add right-click (mouse) to move next to a tile/object,
       face the proper direction and activate it
 
 TODO: maybe add joystick support
+
+TODO: non-perfect grid aligned movement and adjustments (like the original Zelda)

@@ -100,7 +100,7 @@ void worldLoop() {
 
     /*draw player and any world objects*/
     visible_objects.add(objects);
-    visible_objects.add(player);
+    visible_objects.add(player, true);
     visible_objects.draw();
 
     /*force an update of the sideBar*/
@@ -123,7 +123,7 @@ void worldLoop() {
         world.draw();
         /*draw player and objects*/
         visible_objects.add(objects);
-        visible_objects.add(player);
+        visible_objects.add(player, true);
         visible_objects.draw();
         /*update sidebar, as necessary*/
         sidebarUpdate();

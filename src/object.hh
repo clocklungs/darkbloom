@@ -116,8 +116,7 @@ class ObjectLayerList {
   public:
     ObjectLayerList() { head = NULL; };
     ~ObjectLayerList();
-    void add(Object &object);
-    void add(AnimatedObject &object);
+    void add(Object &object, bool is_animated);
     void add(ObjectList &list);
     void draw();
 };

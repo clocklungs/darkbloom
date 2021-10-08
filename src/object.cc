@@ -551,6 +551,7 @@ AnimatedObject::AnimatedObject() {
         move_frame_start[i] = 0;
         last_frame[i] = 0;
     }
+    frame = 0;
     frame_size.x = 0;
     frame_size.y = 0;
     frame_size.w = 0;
@@ -834,8 +835,7 @@ void AnimatedObject::draw() {
         step--;
     }
 
-    /*copy image frame dimensions to a temp rect, to keep SDL from
-    changing it*/
+    /*copy image frame dimensions to a temp rect, to keep SDL from changing it*/
     src.x = frame_size.x;
     src.y = frame_size.y;
     src.w = frame_size.w;
@@ -846,7 +846,7 @@ void AnimatedObject::draw() {
         printf("%s: no image data for direction: %i\n", name.c_str(), direction);
         frame = 0;
         img = NULL;
-        for (i = 0; i < RIGHT + 1; ++i) {
+        for (i = 0; i < RIGHT + 1; ++i) { // Check all directions for any drawable images
             if (image[i] == NULL)
                 continue;
             img = image[i];
@@ -858,12 +858,14 @@ void AnimatedObject::draw() {
 
     /*adjust src for current frame of animation*/
     src.x += frame_size.w * frame;
-    // printf("FRAME: %i\n", frame);
+    // printf("FRAME: %i - %s\n", frame, name.c_str());
 
     if (img != NULL) {
         if (SDL_BlitSurface(img, &src, screen, &dest) == -1) {
             fprintf(stderr, "blit error: %s\n", SDL_GetError());
         }
+    } else {
+        printf("DEBUG: image data missing for animated object %s facing direction %d\n", name.c_str(), direction);
     }
 
     if (!step)
@@ -1014,7 +1016,7 @@ Object *ObjectList::add(const char *filename, int y) {
 
     /*set key value, should keep adding it to a displaylist later fast,
     as long as it doesn't move around (y axis) much*/
-    node->layer = (float)(node->object->zindex) + (float)y / 100.0;
+    node->layer = (float)(node->object->zindex) + (float)y / 100.0f;
 
     /*not already in list, insert it*/
     search = head;
@@ -1293,7 +1295,7 @@ ObjectLayerList::~ObjectLayerList() {
 ObjectLayerList add()
   adds the object to the layer list (sorted by layer)
 *********************************************************************/
-void ObjectLayerList::add(Object &object) {
+void ObjectLayerList::add(Object &object, bool is_animated) {
     ObjectListNode *node, *search;
 
     // printf("ADD OBJECT\n");
@@ -1307,63 +1309,16 @@ void ObjectLayerList::add(Object &object) {
     /*set node to point at this object*/
     node->object = &object;
     /*set node layer key*/
-    node->layer = (float)object.zindex + ((float)object.y / 100.0);
+    node->layer = (float)object.zindex + ((float)object.y / 100.0f);
+    node->animated = is_animated;
+    // printf("layer: %f\n", node->layer);
 
     search = head;
     /*not an empty list?*/
     if (search != NULL) {
         /*find node in front of insertion position*/
         while ((search->next != NULL) && (search->next->layer < node->layer)) {
-            search = search->next;
-        }
-    }
-
-    /*insert at front?*/
-    if ((head == NULL) || (search == head && search->layer >= node->layer)) {
-        // printf("INSERT: at front\n");
-        node->next = search;
-        head = node;
-        return;
-    }
-    /*insert at end?*/
-    if (search->next == NULL) {
-        // printf("INSERT: at end\n");
-        search->next = node;
-        return;
-    }
-    /*insert in middle*/
-    // printf("INSERT: in middle\n");
-    node->next = search->next;
-    search->next = node;
-}
-
-/*********************************************************************
-ObjectLayerList add()
-  adds the animated object to the layer list (sorted by layer)
-*********************************************************************/
-void ObjectLayerList::add(AnimatedObject &object) {
-    ObjectListNode *node, *search;
-
-    // printf("ADD ANIMATED OBJECT\n");
-    // printf("%s\n", object.name.c_str());
-
-    /*don't bother w/ inactive or invisible objects*/
-    if (!object.active || !object.visible)
-        return;
-
-    /*create new node*/
-    node = new ObjectListNode;
-    /*set node to point at this object*/
-    node->object = &object;
-    /*set node layer key*/
-    node->layer = (float)object.zindex + ((float)object.y / 100.0);
-    node->animated = true;
-
-    search = head;
-    /*not an empty list?*/
-    if (search != NULL) {
-        /*find node in front of insertion position*/
-        while ((search->next != NULL) && (search->next->layer < node->layer)) {
+            // printf("search->next->layer: %f\n", search->next->layer);
             search = search->next;
         }
     }
@@ -1397,9 +1352,9 @@ void ObjectLayerList::add(ObjectList &list) {
     search = list.head;
     while (search != NULL) {
         if (search->animated)
-            add(*((AnimatedObject *)search->object));
+            add(*((AnimatedObject *)search->object), true);
         else
-            add(*(search->object));
+            add(*(search->object), false);
         search = search->next;
     }
 }
@@ -1418,9 +1373,11 @@ void ObjectLayerList::draw() {
     /*set clipping rectangle to viewport area*/
     SDL_SetClipRect(screen, &world.viewport);
 
+    // printf("DRAW START------------------\n");
     search = head;
     while (search != NULL) {
         temp = search;
+        // printf("Object %s - layer: %f\n", search->object->name.c_str(), search->layer);
         if (search->animated) {
             ((AnimatedObject *)search->object)->draw();
         } else {
@@ -1431,6 +1388,7 @@ void ObjectLayerList::draw() {
         delete temp;
     }
     head = NULL;
+    // printf("DRAW END------------------\n");
 
     /*restore clipping rectangle*/
     SDL_SetClipRect(screen, &old);
